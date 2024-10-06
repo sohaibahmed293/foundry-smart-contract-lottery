@@ -1,3 +1,7 @@
+# About
+
+A contract for creating a sample raffle using ChainlinkVRF2.5 and Chainlink Automation
+
 ## Foundry
 
 **Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
