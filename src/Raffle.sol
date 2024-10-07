@@ -69,7 +69,7 @@ contract Raffle is VRFConsumerBaseV2Plus {
     function enterRaffle() external payable {
         //        require(msg.value <= i_entranceFee, "Not sent enough ETH!");
         //        require(msg.value <= i_entranceFee, Raffle__SendMoreToEnterRaffle());
-        if (msg.value <= i_entranceFee) {
+        if (msg.value < i_entranceFee) {
             revert Raffle__SendMoreToEnterRaffle();
         }
 
@@ -161,5 +161,9 @@ contract Raffle is VRFConsumerBaseV2Plus {
 
     function getRaffleState() external view returns (RaffleState) {
         return s_raffleState;
+    }
+
+    function getPlayer(uint256 index) external view returns (address) {
+        return s_players[index];
     }
 }
