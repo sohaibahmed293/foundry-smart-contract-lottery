@@ -124,7 +124,7 @@ contract RaffleTest is Test {
         vm.roll(block.number + 1);
 
         // Act
-        (bool upkeepNeeded,) = raffle.checkUpkeep("");
+        (bool upkeepNeeded,) = raffle.checkUpKeep("");
 
         // Assert
         assert(upkeepNeeded);
@@ -178,7 +178,7 @@ contract RaffleTest is Test {
 
     function testFulfillRandomWordsCanOnlyBeCalledAfterPerformUpkeep(uint256 randomRequestId) public raffleEntered {
         // Arrange / Act / Assert
-        vm.expectRevert(VRFCoordinatorV2_5Mock.Invalidrequest.selector);
+        vm.expectRevert(VRFCoordinatorV2_5Mock.InvalidRequest.selector);
         VRFCoordinatorV2_5Mock(vrfCoordinator).fulfillRandomWords(randomRequestId, address(raffle));
     }
 }
