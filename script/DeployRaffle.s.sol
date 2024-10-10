@@ -19,14 +19,15 @@ contract DeployRaffle is Script {
         if (config.subscriptionId == 0) {
             // create a subscription in chainlinkVRF programmatically
             CreateSubscription subscription = new CreateSubscription();
-            (config.subscriptionId, config.vrfCoordinator) = subscription.createSubscription(config.vrfCoordinator);
+            (config.subscriptionId, config.vrfCoordinator) =
+                subscription.createSubscription(config.vrfCoordinator, config.account);
 
             // Fund it
             FundSubscription fundSubscription = new FundSubscription();
-            fundSubscription.fundSubscription(config.vrfCoordinator, config.subscriptionId, config.link);
+            fundSubscription.fundSubscription(config.vrfCoordinator, config.subscriptionId, config.link, config.account);
         }
 
-        vm.startBroadcast();
+        vm.startBroadcast(config.account);
         Raffle raffle = new Raffle(
             config.entranceFee,
             config.interval,
@@ -40,7 +41,7 @@ contract DeployRaffle is Script {
         // Add a consumer to the subscription. This should happen after deploying the contract as
         // we need the address of the most recently deployed contract
         AddConsumer addConsumer = new AddConsumer();
-        addConsumer.addConsumer(address(raffle), config.vrfCoordinator, config.subscriptionId);
+        addConsumer.addConsumer(address(raffle), config.vrfCoordinator, config.subscriptionId, config.account);
 
         return (raffle, helperConfig);
     }
